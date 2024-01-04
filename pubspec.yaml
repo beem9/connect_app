@@ -1,18 +1,32 @@
 name: connect_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: ">=3.2.3 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
+  intl: ^0.19.0
+  cupertino_icons: ^1.0.2
+  firebase_core: ^2.24.2 # enabling connecting to multiple Firebase apps
+  firebase_auth: ^4.14.1 # enabling authentication using passwords, phone numbers and identity providers like Google, Facebook and Twitter
+  google_sign_in: ^6.1.6 # a secure authentication system for signing in with a Google
+  cloud_firestore: ^4.13.1 # a cloud-hosted, noSQL database with live synchronization
+  firebase_storage: ^11.5.2 # object storage service ( images, videos )
+  shared_preferences: ^2.2.2 # local storage on device
+  flutter_riverpod: ^2.4.8 # riverpod state managment
+  go_router: ^12.1.1 # google screen routes managment
+  google_fonts: ^6.1.0 # access fonts from fonts.google.com
+  image_picker: ^1.0.4 # access gallery and take images from camera
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
   flutter_lints: ^2.0.0
 
 flutter:
