@@ -1,6 +1,8 @@
+import 'package:connect_app/app/core/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyTextFormField extends StatelessWidget {
+class MyTextFormField extends ConsumerWidget {
   const MyTextFormField(
       {super.key,
       required this.textController,
@@ -27,27 +29,35 @@ class MyTextFormField extends StatelessWidget {
   final String? Function(String?)? validation;
 
   @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: textController,
-      focusNode: myFocusNode,
-      textInputAction: myAction,
-      decoration: InputDecoration(
-        // Input with border outlined
-        border: OutlineInputBorder(
-          // Make border edge circular
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SizedBox(
+      height: context.screenHeight * 0.11,
+      child: TextFormField(
+        controller: textController,
+        focusNode: myFocusNode,
+        textInputAction: myAction,
+        decoration: InputDecoration(
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+          floatingLabelBehavior:
+              FloatingLabelBehavior.never, // Ensure label stays as placeholder
+          // Input with border outlined
+          border: OutlineInputBorder(
+            // Make border edge circular
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+
+          label: Text(labelText),
+          prefix: prefixIcon,
+          suffix: IconButton(
+            icon: suffixIcon ?? SizedBox(),
+            onPressed: togglePassword,
+          ),
         ),
-        label: Text(labelText),
-        prefix: prefixIcon,
-        suffix: IconButton(
-          icon: suffixIcon ?? SizedBox(),
-          onPressed: togglePassword,
-        ),
+        obscureText: obscureText,
+        onChanged: onChange,
+        validator: validation,
       ),
-      obscureText: obscureText,
-      onChanged: onChange,
-      validator: validation,
     );
   }
 }

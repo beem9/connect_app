@@ -49,7 +49,7 @@ class _MyAuthFormStateState extends State<MyAuthFormState> {
                   labelText: context.translate.email,
                   prefixIcon: const Icon(Icons.email),
                   obscureText: false,
-                  onChange: null,
+                  onChange: (value) {},
                   validation: (value) {
                     return _authValidators.emailValidator(value);
                   }),
@@ -63,7 +63,7 @@ class _MyAuthFormStateState extends State<MyAuthFormState> {
                 labelText: context.translate.username,
                 prefixIcon: Icon(Icons.person),
                 obscureText: false,
-                onChange: null,
+                onChange: (value) {},
                 validation: (value) {
                   return _authValidators.userNameValidator(value);
                 },
@@ -78,7 +78,7 @@ class _MyAuthFormStateState extends State<MyAuthFormState> {
                 labelText: context.translate.password,
                 prefixIcon: const Icon(Icons.password),
                 obscureText: true,
-                onChange: null,
+                onChange: (value) {},
                 validation: (value) {
                   return _authValidators.passwordValidator(value);
                 },
