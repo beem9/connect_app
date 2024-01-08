@@ -8,7 +8,12 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text(context.translate.login)),
+      body: Center(
+          child: Container(
+              height: context.screenHeight * 0.2,
+              width: context.screenWidth * 0.2,
+              color: Colors.amber,
+              child: Text(context.translate.login))),
     );
   }
 }
