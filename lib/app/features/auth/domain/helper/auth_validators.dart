@@ -34,7 +34,7 @@ class AuthValidators {
       } else if (strength == 4) {
         return 'Strong password';
       } else {
-        return 'Very strong password';
+        return null;
       }
     }
   }

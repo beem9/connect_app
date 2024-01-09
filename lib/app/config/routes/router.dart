@@ -1,4 +1,5 @@
 import 'package:connect_app/app/config/routes/my_named_routes.dart';
+import 'package:connect_app/app/features/auth/views/homepage.dart';
 import 'package:connect_app/app/features/auth/views/login.dart';
 import 'package:connect_app/app/features/auth/views/register.dart';
 import 'package:connect_app/app/features/auth/views/splashscreen.dart';
@@ -44,6 +45,15 @@ abstract class AppRouter {
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: RegisterScreen(),
+        ),
+      ),
+      GoRoute(
+        parentNavigatorKey: rootNavigatorKey,
+        path: "/${MyNamedRoutes.home}",
+        name: MyNamedRoutes.home,
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: HomePage(),
         ),
       ),
     ],

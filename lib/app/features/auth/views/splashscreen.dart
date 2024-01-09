@@ -1,4 +1,6 @@
 import 'package:connect_app/app/config/routes/my_named_routes.dart';
+import 'package:connect_app/app/config/theme/my_colors.dart';
+import 'package:connect_app/app/core/extensions/build_context_extension.dart';
 import 'package:connect_app/app/features/auth/domain/providers/auth_providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,15 @@ class SplashScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final checkIfAuth = ref.watch(checkIfAuthinticated);
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'splashscreen',
+          style: context.theme.textTheme.titleMedium?.copyWith(
+            color: MyColors.black,
+          ),
+        ),
+        backgroundColor: Colors.orangeAccent,
+      ),
       body: checkIfAuth.when(data: (AsyncValue<User?> data) {
         if (data.value?.uid != null) {
           /*
@@ -22,7 +33,7 @@ class SplashScreen extends ConsumerWidget {
           ensuring the UI is fully updated and the correct dimensions are available
           */
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            context.goNamed(MyNamedRoutes.login);
+            context.goNamed(MyNamedRoutes.home);
           });
         } else {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
