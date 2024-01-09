@@ -23,9 +23,10 @@ class RegisterScreen extends ConsumerWidget {
             style: context.textTheme.headlineMedium
                 ?.copyWith(fontSize: 16, color: MyColors.black),
           ),
+          backgroundColor: Colors.orangeAccent,
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MyAuthFormState(formKey: formKey),
             ElevatedButton(
@@ -39,7 +40,9 @@ class RegisterScreen extends ConsumerWidget {
                 },
                 child: Text(context.translate.register)),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                authController.googleSign();
+              },
               child: Text(
                 (context.translate.googleSign),
                 style: context.textTheme.bodyLarge?.copyWith(

@@ -34,7 +34,7 @@ abstract class AppRouter {
         name: MyNamedRoutes.login,
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: const LoginScreen(),
+          child: LoginScreen(),
         ),
       ),
       GoRoute(
