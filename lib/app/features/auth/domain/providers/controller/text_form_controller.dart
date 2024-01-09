@@ -12,6 +12,7 @@ class MyAuthFormController extends ChangeNotifier {
   bool get togglePassword => _togglePassword;
 
   void setEmailField(String value) {
+    // rootNavigatorKey.currentState?.context.push('login');
     _email = value;
     notifyListeners();
   }

@@ -48,7 +48,7 @@ class MyTextFormField extends ConsumerWidget {
           ),
 
           label: Text(labelText),
-          prefix: prefixIcon,
+          prefixIcon: prefixIcon,
           suffix: IconButton(
             icon: suffixIcon ?? SizedBox(),
             onPressed: togglePassword,

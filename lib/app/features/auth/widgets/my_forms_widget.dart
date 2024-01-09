@@ -1,17 +1,21 @@
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
 import 'package:connect_app/app/features/auth/domain/helper/auth_validators.dart';
+import 'package:connect_app/app/features/auth/domain/providers/auth_providers.dart';
 import 'package:connect_app/app/features/auth/widgets/my_textform_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyAuthFormState extends StatefulWidget {
+class MyAuthFormState extends ConsumerStatefulWidget {
   const MyAuthFormState({super.key, required this.formKey});
   final GlobalKey<FormState> formKey;
 
   @override
-  State<MyAuthFormState> createState() => _MyAuthFormStateState();
+  /*add consumer*/ ConsumerState<MyAuthFormState> createState() =>
+      _MyAuthFormStateState();
 }
 
-class _MyAuthFormStateState extends State<MyAuthFormState> {
+class _MyAuthFormStateState
+    extends ConsumerState<MyAuthFormState> /*add consumer*/ {
   final _authValidators = AuthValidators();
 
   final TextEditingController emailController = TextEditingController();
@@ -36,6 +40,7 @@ class _MyAuthFormStateState extends State<MyAuthFormState> {
 
   @override
   Widget build(BuildContext context) {
+    final formProvider = ref.watch(authFormController);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Form(
@@ -49,7 +54,12 @@ class _MyAuthFormStateState extends State<MyAuthFormState> {
                   labelText: context.translate.email,
                   prefixIcon: const Icon(Icons.email),
                   obscureText: false,
-                  onChange: (value) {},
+                  onChange: (value) {
+                    if (value != null) {
+                      formProvider.setEmailField(value);
+                    }
+                    return null;
+                  },
                   validation: (value) {
                     return _authValidators.emailValidator(value);
                   }),
@@ -63,9 +73,14 @@ class _MyAuthFormStateState extends State<MyAuthFormState> {
                 labelText: context.translate.username,
                 prefixIcon: Icon(Icons.person),
                 obscureText: false,
-                onChange: (value) {},
-                validation: (value) {
-                  return _authValidators.userNameValidator(value);
+                onChange: (value) {
+                  if (value != null) {
+                    formProvider.setUserNameField(value);
+                  }
+                  return null;
+                },
+                validation: (val) {
+                  return _authValidators.userNameValidator(val);
                 },
               ),
               SizedBox(
@@ -77,12 +92,24 @@ class _MyAuthFormStateState extends State<MyAuthFormState> {
                 myAction: TextInputAction.next,
                 labelText: context.translate.password,
                 prefixIcon: const Icon(Icons.password),
-                obscureText: true,
-                onChange: (value) {},
+                obscureText: formProvider.togglePassword ? true : false,
+                onChange: (value) {
+                  if (value != null) {
+                    formProvider.setPasswordField(value);
+                  }
+                  return null;
+                },
                 validation: (value) {
                   return _authValidators.passwordValidator(value);
                 },
-                suffixIcon: Icon(Icons.remove_red_eye),
+                togglePassword: () {
+                  formProvider.togglePasswordIcon();
+                },
+                suffixIcon: Icon(
+                  formProvider.togglePassword
+                      ? Icons.remove_red_eye_outlined
+                      : Icons.remove_red_eye_rounded,
+                ),
               )
             ],
           )),
