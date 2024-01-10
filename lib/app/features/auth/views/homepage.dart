@@ -15,13 +15,17 @@ class HomePage extends ConsumerWidget {
         title: Text('homepage'),
       ),
       body: Column(children: [
+        SizedBox(
+          height: 300,
+        ),
         Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  authProvider.signOut();
-                  context.goNamed(MyNamedRoutes.login);
-                },
-                child: Text('Sign out')))
+            child: IconButton(
+          icon: Icon(Icons.logout),
+          onPressed: () {
+            authProvider.signOut();
+            context.goNamed(MyNamedRoutes.login);
+          },
+        ))
       ]),
     );
   }
