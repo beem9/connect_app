@@ -20,7 +20,7 @@ final authControllerProvider =
 final authStateProvider = StreamProvider<User?>((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   ref.read(authControllerProvider);
-  return authRepository.authStateChanged;
+  return authRepository.authStateChanges;
 });
 final checkIfAuthinticated =
     FutureProvider((ref) => ref.watch(authStateProvider));

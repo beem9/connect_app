@@ -1,70 +1,97 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepo {
-  final FirebaseAuth _firebaseAuth;
-
   AuthRepo(this._firebaseAuth);
 
+  final FirebaseAuth _firebaseAuth;
+
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
   User? get currentUser => _firebaseAuth.currentUser;
-  Stream<User?> get authStateChanged => _firebaseAuth.authStateChanges();
 
   Future<User?> createUserWithEmailAndPassword(
-      {required String email,
-      required String password,
-      required String userName}) async {
+      {required String email, required String password}) async {
     try {
-      final UserCredential userCredential = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-
-      await saveUserInfoToFirebase(userCredential.user?.uid, userName,
-          userCredential.user?.email, userCredential.user?.photoURL);
-
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       return userCredential.user;
-    } catch (e) {
-      throw e.toString();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw AuthException('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        throw AuthException('Wrong password provided for that user.');
+      } else {
+        throw AuthException(e.message!);
+      }
+    }
+  }
+
+  Future<User?> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
+    try {
+      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw AuthException('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        throw AuthException('Wrong password provided for that user.');
+      } else {
+        throw AuthException(e.message!);
+      }
     }
   }
 
   Future<User?> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await GoogleSignIn().signIn();
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) return null;
 
-      if (googleSignInAccount == null) return null;
-
-      final googleAuth = await googleSignInAccount.authentication;
+      final googleAuth = await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
       final userCredential =
           await _firebaseAuth.signInWithCredential(credential);
-
-      await saveUserInfoToFirebase(
-          userCredential.user?.uid,
-          userCredential.user?.displayName,
-          userCredential.user?.email,
-          userCredential.user?.photoURL);
+      if (userCredential.user != null) {
+        await saveUserInfoToFirebase(
+            userCredential.user!.uid.toString(),
+            userCredential.user!.displayName.toString(),
+            userCredential.user!.email.toString());
+      }
 
       return userCredential.user;
     } catch (e) {
-      throw e.toString();
+      debugPrint(e.toString());
+      throw AuthException(e.toString());
     }
   }
 
-  Future saveUserInfoToFirebase(
-      String? uid, String? displayName, String? email, String? photoUrl) async {
+  Future<void> saveUserInfoToFirebase(
+    String userId,
+    String userName,
+    String email,
+  ) async {
     try {
-      await FirebaseFirestore.instance.collection("users").doc(uid).set({
-        "username": displayName,
-        "email": email,
-        "id": uid,
-        "photo": photoUrl,
-        "userLocation": null
-      });
+      await FirebaseFirestore.instance.collection('users').doc(userId).set(
+        {
+          "userID": userId,
+          'username': userName,
+          'email': email,
+          'userLocation': null,
+        },
+      );
     } catch (e) {
-      throw e.toString();
+      throw AuthException(e.toString());
     }
   }
 
@@ -72,7 +99,17 @@ class AuthRepo {
     try {
       await _firebaseAuth.signOut();
     } catch (e) {
-      throw e.toString();
+      debugPrint(e.toString());
+      throw AuthException(e.toString());
     }
   }
+}
+
+class AuthException implements Exception {
+  AuthException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
 }
