@@ -1,5 +1,9 @@
 {
   "@@locale": "en",
   "login": "Login",
-  "register": "Register"
+  "register": "Register",
+  "email": "Email",
+  "username": "Username",
+  "password": "Password",
+  "googleSign": "Google Sign in"
 }

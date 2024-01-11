@@ -1,5 +1,9 @@
 {
   "@@locale": "ar",
   "login": "تسجيل دخول",
-  "register": "تسجيل مستخدم جديد"
+  "register": "تسجيل مستخدم جديد",
+  "email": "البريد الالكتروني",
+  "username": "اسم المستخدم",
+  "password": "الرمز السري",
+  "googleSign": "Sign in"
 }
