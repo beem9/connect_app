@@ -82,8 +82,8 @@ class AuthController extends StateNotifier<AuthState> {
             isLoading: false, error: "Cannot retrieve user data");
         return false;
       }
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+    } on AuthException catch (e) {
+      state = state.copyWith(isLoading: false, error: e.message.toString());
     }
     return false;
   }

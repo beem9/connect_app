@@ -22,8 +22,11 @@ class HomePage extends ConsumerWidget {
             child: IconButton(
           icon: Icon(Icons.logout),
           onPressed: () {
-            authProvider.signOut();
-            context.goNamed(MyNamedRoutes.login);
+            authProvider.signOut().then((value) {
+              if (value == true) {
+                context.goNamed(MyNamedRoutes.login);
+              }
+            });
           },
         ))
       ]),
