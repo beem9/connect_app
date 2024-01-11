@@ -1,5 +1,9 @@
 import 'package:connect_app/app/config/routes/my_named_routes.dart';
-import 'package:connect_app/app/features/auth/views/homepage.dart';
+import 'package:connect_app/app/core/chats/navbar/view/location_screen.dart';
+import 'package:connect_app/app/core/chats/navbar/view/navbar_screen.dart';
+import 'package:connect_app/app/core/chats/navbar/view/profile_screen.dart';
+import 'package:connect_app/app/core/chats/navbar/view/homepage.dart';
+import 'package:connect_app/app/core/chats/navbar/widgets/bottom_navbar_tab.dart';
 import 'package:connect_app/app/features/auth/views/login.dart';
 import 'package:connect_app/app/features/auth/views/register.dart';
 import 'package:connect_app/app/features/auth/views/splashscreen.dart';
@@ -9,6 +13,7 @@ import 'package:go_router/go_router.dart';
 ///[rootNavigatorKey] used for global | general navigation
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final form = GlobalKey<FormState>();
+final shellRouteKey = GlobalKey<NavigatorState>();
 
 abstract class AppRouter {
   static Widget errorWidget(BuildContext context, GoRouterState state) =>
@@ -47,15 +52,44 @@ abstract class AppRouter {
           child: RegisterScreen(),
         ),
       ),
-      GoRoute(
-        parentNavigatorKey: rootNavigatorKey,
-        path: "/${MyNamedRoutes.home}",
-        name: MyNamedRoutes.home,
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: HomePage(),
-        ),
-      ),
+
+      ShellRoute(
+          navigatorKey: shellRouteKey,
+          builder: (context, state, child) {
+            return ScaffoldWithBottomNavBar(
+              tabs: BottomNavBarTabs.tabs(context),
+              child: child,
+            );
+          },
+          routes: [
+            GoRoute(
+              path: "/${MyNamedRoutes.home}",
+              name: MyNamedRoutes.home,
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const HomePage(),
+              ),
+            ),
+            // Add new routes for Profile and Locations screens
+            GoRoute(
+              path: "/${MyNamedRoutes.profile}",
+              name: MyNamedRoutes.profile,
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child:
+                    const ProfileScreen(), // Replace with your Profile screen
+              ),
+            ),
+            GoRoute(
+              path: "/${MyNamedRoutes.location}",
+              name: MyNamedRoutes.location,
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child:
+                    const LocationsScreen(), // Replace with your Locations screen
+              ),
+            ),
+          ])
     ],
     errorBuilder: errorWidget,
   );

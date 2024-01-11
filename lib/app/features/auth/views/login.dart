@@ -41,7 +41,7 @@ class LoginScreen extends ConsumerWidget {
                       email: fieldValues.email,
                       userName: fieldValues.userName,
                       password: fieldValues.password);
-                  context.pushNamed(MyNamedRoutes.home);
+                  context.goNamed(MyNamedRoutes.home);
                 }
               },
               child: Text(context.translate.login)),
