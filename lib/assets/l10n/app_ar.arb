@@ -5,5 +5,10 @@
   "email": "البريد الالكتروني",
   "username": "اسم المستخدم",
   "password": "الرمز السري",
-  "googleSign": "Sign in"
+  "googleSign": "Sign in",
+  "chats": "Chat",
+  "profile": "Profile",
+  "location": "Location",
+  "users": "Users",
+  "errorfetchinguser": "Error while fetching user!"
 }
