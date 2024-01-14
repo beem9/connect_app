@@ -37,11 +37,16 @@ class LoginScreen extends ConsumerWidget {
           ElevatedButton(
               onPressed: () {
                 if (formKey.currentState?.validate() == true) {
-                  authProvider.login(
-                      email: fieldValues.email,
-                      userName: fieldValues.userName,
-                      password: fieldValues.password);
-                  context.pushNamed(MyNamedRoutes.home);
+                  authProvider
+                      .login(
+                          email: fieldValues.email,
+                          userName: fieldValues.userName,
+                          password: fieldValues.password)
+                      .then((value) {
+                    if (value == true) {
+                      context.goNamed(MyNamedRoutes.home);
+                    }
+                  });
                 }
               },
               child: Text(context.translate.login)),
