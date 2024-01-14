@@ -1,5 +1,5 @@
-import 'package:connect_app/app/core/chats/domain/models/user_model.dart';
-import 'package:connect_app/app/core/chats/domain/repo/chats_repo.dart';
+import 'package:connect_app/app/core/modules/chats/domain/models/user_model.dart';
+import 'package:connect_app/app/core/modules/chats/domain/repo/chats_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

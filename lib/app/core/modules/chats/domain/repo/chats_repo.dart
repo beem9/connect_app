@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connect_app/app/core/chats/domain/models/user_model.dart';
+import 'package:connect_app/app/core/modules/chats/domain/models/user_model.dart';
 
 class ChatsRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

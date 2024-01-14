@@ -1,6 +1,6 @@
 import 'package:connect_app/app/config/routes/my_named_routes.dart';
-import 'package:connect_app/app/core/chats/domain/models/user_model.dart';
-import 'package:connect_app/app/core/chats/domain/providers/providers.dart';
+import 'package:connect_app/app/core/modules/chats/domain/models/user_model.dart';
+import 'package:connect_app/app/core/modules/chats/domain/providers/providers.dart';
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
 import 'package:connect_app/app/features/auth/domain/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +41,10 @@ class HomePage extends ConsumerWidget {
               final user = data[index];
               return Card(
                 child: ListTile(
+                  onTap: () {
+                    context.pushNamed(MyNamedRoutes.chatDetails,
+                        extra: data[index]);
+                  },
                   title: Text(user.email),
                   subtitle: Text(user.username),
                 ),
