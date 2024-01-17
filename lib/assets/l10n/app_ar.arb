@@ -10,5 +10,8 @@
   "profile": "Profile",
   "location": "Location",
   "users": "Users",
-  "errorfetchinguser": "Error while fetching user!"
+  "errorfetchinguser": "Error while fetching user!",
+  "photoGallery": "صور",
+  "cameraImage": "تصوير",
+  "cancel": "كنسل"
 }

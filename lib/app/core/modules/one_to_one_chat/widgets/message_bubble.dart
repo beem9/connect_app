@@ -13,44 +13,55 @@ class MessageBubble extends StatelessWidget with CustomDateTimeFormatter {
 
   @override
   Widget build(BuildContext context) {
-    final thisUser = FirebaseAuth.instance.currentUser;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        crossAxisAlignment: message.senderId == thisUser!.uid
-            ? CrossAxisAlignment.end
-            : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            message.senderId == FirebaseAuth.instance.currentUser!.uid
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: message.senderId == thisUser.uid
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
+            mainAxisAlignment:
+                message.senderId == FirebaseAuth.instance.currentUser!.uid
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
             children: [
               Flexible(
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: message.senderId == thisUser.uid
+                    color: message.senderId ==
+                            FirebaseAuth.instance.currentUser!.uid
                         ? Colors.blue[100]
                         : Colors.grey[200],
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(15),
                       topRight: const Radius.circular(15),
-                      bottomLeft: message.senderId == thisUser.uid
+                      bottomLeft: message.senderId ==
+                              FirebaseAuth.instance.currentUser!.uid
                           ? const Radius.circular(15)
                           : const Radius.circular(0),
-                      bottomRight: message.senderId == thisUser.uid
+                      bottomRight: message.senderId ==
+                              FirebaseAuth.instance.currentUser!.uid
                           ? const Radius.circular(0)
                           : const Radius.circular(15),
                     ),
                   ),
-                  child: Text(
-                    message.message,
-                    style: context.textTheme.bodyMedium?.copyWith(
-                        color: message.senderId == thisUser.uid
-                            ? Colors.black
-                            : Colors.black87),
-                  ),
+                  child: message.message.startsWith("https")
+                      ? Image.network(
+                          message.message,
+                          height: context.screenHeight * 0.25,
+                          width: context.screenWidth * 0.3,
+                        )
+                      : Text(
+                          message.message,
+                          style: context.textTheme.bodyMedium?.copyWith(
+                              color: message.senderId ==
+                                      FirebaseAuth.instance.currentUser!.uid
+                                  ? Colors.black
+                                  : Colors.black87),
+                        ),
                 ),
               ),
             ],

@@ -6,9 +6,9 @@ import 'package:connect_app/app/core/modules/chats/navbar/view/profile_screen.da
 import 'package:connect_app/app/core/modules/chats/navbar/view/homepage.dart';
 import 'package:connect_app/app/core/modules/chats/navbar/widgets/bottom_navbar_tab.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/views/message_screen.dart';
-import 'package:connect_app/app/features/auth/views/login.dart';
-import 'package:connect_app/app/features/auth/views/register.dart';
-import 'package:connect_app/app/features/auth/views/splashscreen.dart';
+import 'package:connect_app/app/core/modules/auth/views/login.dart';
+import 'package:connect_app/app/core/modules/auth/views/register.dart';
+import 'package:connect_app/app/core/modules/auth/views/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

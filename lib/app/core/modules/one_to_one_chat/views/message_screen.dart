@@ -1,8 +1,11 @@
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
 import 'package:connect_app/app/core/modules/chats/domain/models/user_model.dart';
+import 'package:connect_app/app/core/modules/one_to_one_chat/domain/helper/image_picker_bottom_sheet.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/domain/models/message.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/domain/providers/chat_providers.dart';
+import 'package:connect_app/app/core/modules/one_to_one_chat/domain/providers/controller/message_notifier.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/domain/repo/message_repo.dart';
+import 'package:connect_app/app/core/modules/one_to_one_chat/widgets/loading_effect.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/widgets/message_bubble.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +23,15 @@ class ChatRoomPage extends ConsumerStatefulWidget {
   ConsumerState<ChatRoomPage> createState() => _MessagingBodyViewState();
 }
 
-class _MessagingBodyViewState extends ConsumerState<ChatRoomPage> {
+class _MessagingBodyViewState extends ConsumerState<ChatRoomPage>
+    with PickAnImageBottomSheet {
   final _sendMessageController = TextEditingController();
+  // final pickImageFromBottomSheet = PickAnImageBottomSheet();
   @override
   Widget build(BuildContext context) {
     final messagingRepo = ref.read(messagingProvider);
+    final messageState = ref.watch(chatMessageProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.selectedUser.username),
@@ -32,6 +39,11 @@ class _MessagingBodyViewState extends ConsumerState<ChatRoomPage> {
       ),
       body: Column(
         children: [
+          // Visibility(
+          //     visible: messageState.isLoading,
+          //     child: Center(
+          //       child: CircularProgressIndicator(),
+          //     )),
           Expanded(
             child: StreamBuilder<List<Message>>(
               stream: messagingRepo.messagesStream(
@@ -58,6 +70,7 @@ class _MessagingBodyViewState extends ConsumerState<ChatRoomPage> {
               },
             ),
           ),
+          const LoadingEffect(),
           _buildMessageInput(context, widget.selectedUser.id, messagingRepo),
         ],
       ),
@@ -68,42 +81,52 @@ class _MessagingBodyViewState extends ConsumerState<ChatRoomPage> {
       BuildContext context, String userId, MessagingRepository messagingRepo) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 16.0, left: 16.0, bottom: 16.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                keyboardType: TextInputType.text,
-                controller: _sendMessageController,
-                decoration:
-                    const InputDecoration(hintText: 'Type your message'),
+      child: Row(
+        children: [
+          IconButton(
+              onPressed: () {
+                showOptions(context,
+                    senderId: FirebaseAuth.instance.currentUser!.uid,
+                    receiverId: userId);
+              },
+              icon: const Icon(Icons.add_a_photo)),
+          Expanded(
+            child: TextField(
+              controller: _sendMessageController,
+              maxLines: null,
+              decoration: InputDecoration(
+                hintText: 'Type your message',
+                hintStyle: context.textTheme.bodySmall,
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 6),
               ),
             ),
-            IconButton(
-              onPressed: () async {
-                try {
-                  await messagingRepo
-                      .sendMessage(
-                    senderId: FirebaseAuth.instance.currentUser!.uid,
-                    receiverId: userId,
-                    message: _sendMessageController.text,
-                  )
-                      .whenComplete(() {
-                    _sendMessageController.clear();
-                  });
-                } catch (e) {
-                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                    context.showSnackbar(
-                      'Error sending message: $e',
-                    );
-                  });
-                }
-              },
-              icon: const Icon(Icons.send),
-            ),
-          ],
-        ),
+          ),
+          IconButton(
+            onPressed: () async {
+              try {
+                await messagingRepo
+                    .sendMessage(
+                  senderId: FirebaseAuth.instance.currentUser!.uid,
+                  receiverId: userId,
+                  message: _sendMessageController.text,
+                )
+                    .whenComplete(() {
+                  _sendMessageController.clear();
+                });
+              } catch (e) {
+                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                  context.showSnackbar(
+                    'Error sending message: $e',
+                  );
+                });
+              }
+            },
+            icon: const Icon(Icons.send),
+          ),
+        ],
       ),
     );
   }

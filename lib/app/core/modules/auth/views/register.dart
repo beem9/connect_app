@@ -1,14 +1,14 @@
 import 'package:connect_app/app/config/routes/my_named_routes.dart';
 import 'package:connect_app/app/config/theme/my_colors.dart';
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
-import 'package:connect_app/app/features/auth/domain/providers/auth_providers.dart';
-import 'package:connect_app/app/features/auth/widgets/my_login_forms_widget.dart';
+import 'package:connect_app/app/core/modules/auth/domain/providers/auth_providers.dart';
+import 'package:connect_app/app/core/modules/auth/widgets/my_forms_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends ConsumerWidget {
-  LoginScreen({super.key});
+class RegisterScreen extends ConsumerWidget {
+  RegisterScreen({super.key});
 
   final formKey = GlobalKey<FormState>();
 
@@ -20,7 +20,7 @@ class LoginScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          context.translate.login,
+          context.translate.register,
           style: context.theme.textTheme.titleMedium?.copyWith(
             color: MyColors.black,
           ),
@@ -30,37 +30,32 @@ class LoginScreen extends ConsumerWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          MyLoginAuthFormState(formKey: formKey),
+          MyAuthFormState(formKey: formKey),
           const SizedBox(
             height: 12,
           ),
           ElevatedButton(
               onPressed: () {
                 if (formKey.currentState?.validate() == true) {
-                  authProvider
-                      .login(
-                          email: fieldValues.email,
-                          userName: fieldValues.userName,
-                          password: fieldValues.password)
-                      .then((value) {
-                    if (value == true) {
-                      context.goNamed(MyNamedRoutes.home);
-                    }
-                  });
+                  authProvider.register(
+                      email: fieldValues.email,
+                      userName: fieldValues.userName,
+                      password: fieldValues.password);
+                  context.pushNamed(MyNamedRoutes.login);
                 }
               },
-              child: Text(context.translate.login)),
+              child: Text(context.translate.register)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Dont have an account?"),
+              const Text("Registered?"),
               TextButton(
                   onPressed: () {
-                    context.goNamed(MyNamedRoutes.register);
+                    context.pushNamed(MyNamedRoutes.login);
                   },
-                  child: Text(
-                    context.translate.register,
-                    style: const TextStyle(color: Colors.lightBlue),
+                  child: const Text(
+                    "Sign in here!",
+                    style: TextStyle(color: Colors.lightBlue),
                   ))
             ],
           ),
@@ -70,7 +65,6 @@ class LoginScreen extends ConsumerWidget {
           TextButton(
               onPressed: () {
                 authProvider.signInWithGoogle();
-                context.pushNamed(MyNamedRoutes.home);
               },
               child: Text(context.translate.googleSign)),
         ],

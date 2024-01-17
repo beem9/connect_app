@@ -2,7 +2,7 @@ import 'package:connect_app/app/config/routes/my_named_routes.dart';
 import 'package:connect_app/app/core/modules/chats/domain/models/user_model.dart';
 import 'package:connect_app/app/core/modules/chats/domain/providers/providers.dart';
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
-import 'package:connect_app/app/features/auth/domain/providers/auth_providers.dart';
+import 'package:connect_app/app/core/modules/auth/domain/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

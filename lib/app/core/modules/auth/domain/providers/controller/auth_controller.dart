@@ -1,5 +1,5 @@
-import 'package:connect_app/app/features/auth/domain/providers/state/auth_state.dart';
-import 'package:connect_app/app/features/auth/domain/repo/auth_repo.dart';
+import 'package:connect_app/app/core/modules/auth/domain/providers/state/auth_state.dart';
+import 'package:connect_app/app/core/modules/auth/domain/repo/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
