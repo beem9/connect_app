@@ -52,9 +52,15 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>635677029777-igr1blgn9japaau57gfr9b654f0iq89l.apps.googleusercontent.com</string>
+					<string>com.googleusercontent.apps.635677029777-igr1blgn9japaau57gfr9b654f0iq89l</string>
 				</array>
 			</dict>
 		</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow access to camera to capture photos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>send videos from camera in one to one chat</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access to photo library</string>
 </dict>
 </plist>
