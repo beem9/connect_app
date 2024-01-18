@@ -1,6 +1,5 @@
 import 'package:connect_app/app/config/theme/my_colors.dart';
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
-import 'package:connect_app/app/core/modules/chats/domain/models/user_model.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/domain/models/message.dart';
 import 'package:connect_app/app/utils/datetime_formatter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
