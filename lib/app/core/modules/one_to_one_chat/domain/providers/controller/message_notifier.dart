@@ -38,6 +38,8 @@ class ChatMessageStateNotifier extends StateNotifier<MessageChatState> {
     final destination = 'files/$fileName';
 
     try {
+      state = state.copyWith(isLoading: true);
+
       final ref = FirebaseStorage.instance.ref(destination);
       ref.putFile(fileData).then((snapshot) async {
         // Get download URL after upload completes
@@ -68,7 +70,10 @@ class ChatMessageStateNotifier extends StateNotifier<MessageChatState> {
             pickedFile.path,
           ),
         );
+      } else {
+        state = state.copyWith(isLoading: false);
       }
+      // if (pickedFile == null) {}
     } catch (e) {
       state =
           state.copyWith(message: "", isLoading: false, error: e.toString());
@@ -85,7 +90,7 @@ class ChatMessageStateNotifier extends StateNotifier<MessageChatState> {
           source: ImageSource.camera,
           maxHeight: 480,
           maxWidth: 640,
-          imageQuality: 50);
+          imageQuality: 100);
 
       if (pickedFile != null) {
         uploadMediaFile(
@@ -95,6 +100,8 @@ class ChatMessageStateNotifier extends StateNotifier<MessageChatState> {
             pickedFile.path,
           ),
         );
+      } else {
+        state = state.copyWith(isLoading: false);
       }
     } catch (e) {
       state = state.copyWith(
