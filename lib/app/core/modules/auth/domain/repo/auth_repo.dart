@@ -84,7 +84,7 @@ class AuthRepo {
     try {
       await FirebaseFirestore.instance.collection('users').doc(userId).set(
         {
-          "userID": userId,
+          "id": userId,
           'username': userName,
           'email': email,
           'userLocation': null,

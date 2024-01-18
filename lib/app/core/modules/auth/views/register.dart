@@ -1,8 +1,8 @@
 import 'package:connect_app/app/config/routes/my_named_routes.dart';
 import 'package:connect_app/app/config/theme/my_colors.dart';
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
-import 'package:connect_app/app/features/auth/domain/providers/auth_providers.dart';
-import 'package:connect_app/app/features/auth/widgets/my_forms_widget.dart';
+import 'package:connect_app/app/core/modules/auth/domain/providers/auth_providers.dart';
+import 'package:connect_app/app/core/modules/auth/widgets/my_forms_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

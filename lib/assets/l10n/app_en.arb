@@ -5,5 +5,13 @@
   "email": "Email",
   "username": "Username",
   "password": "Password",
-  "googleSign": "Google Sign in"
+  "googleSign": "Google Sign in",
+  "chats": "Chat",
+  "profile": "Profile",
+  "location": "Location",
+  "users": "Users",
+  "errorfetchinguser": "Error while fetching user!",
+  "photoGallery": "Photo Gallery",
+  "cameraImage": "Camera Image",
+  "cancel": "Cancel"
 }

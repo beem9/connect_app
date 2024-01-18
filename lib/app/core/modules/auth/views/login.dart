@@ -1,8 +1,8 @@
 import 'package:connect_app/app/config/routes/my_named_routes.dart';
 import 'package:connect_app/app/config/theme/my_colors.dart';
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
-import 'package:connect_app/app/features/auth/domain/providers/auth_providers.dart';
-import 'package:connect_app/app/features/auth/widgets/my_login_forms_widget.dart';
+import 'package:connect_app/app/core/modules/auth/domain/providers/auth_providers.dart';
+import 'package:connect_app/app/core/modules/auth/widgets/my_login_forms_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -37,11 +37,16 @@ class LoginScreen extends ConsumerWidget {
           ElevatedButton(
               onPressed: () {
                 if (formKey.currentState?.validate() == true) {
-                  authProvider.login(
-                      email: fieldValues.email,
-                      userName: fieldValues.userName,
-                      password: fieldValues.password);
-                  context.pushNamed(MyNamedRoutes.home);
+                  authProvider
+                      .login(
+                          email: fieldValues.email,
+                          userName: fieldValues.userName,
+                          password: fieldValues.password)
+                      .then((value) {
+                    if (value == true) {
+                      context.goNamed(MyNamedRoutes.home);
+                    }
+                  });
                 }
               },
               child: Text(context.translate.login)),

@@ -7,4 +7,5 @@ abstract class MyNamedRoutes {
   static const profile = 'profile';
   static const editProfile = 'editProfile';
   static const home = 'home';
+  static const location = 'location';
 }
