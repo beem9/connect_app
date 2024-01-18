@@ -3,7 +3,6 @@ import 'package:connect_app/app/core/modules/chats/domain/models/user_model.dart
 import 'package:connect_app/app/core/modules/one_to_one_chat/domain/helper/image_picker_bottom_sheet.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/domain/models/message.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/domain/providers/chat_providers.dart';
-import 'package:connect_app/app/core/modules/one_to_one_chat/domain/providers/controller/message_notifier.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/domain/repo/message_repo.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/widgets/loading_effect.dart';
 import 'package:connect_app/app/core/modules/one_to_one_chat/widgets/message_bubble.dart';
@@ -30,7 +29,7 @@ class _MessagingBodyViewState extends ConsumerState<ChatRoomPage>
   @override
   Widget build(BuildContext context) {
     final messagingRepo = ref.read(messagingProvider);
-    final messageState = ref.watch(chatMessageProvider);
+    // final messageState = ref.watch(chatMessageProvider);
 
     return Scaffold(
       appBar: AppBar(
