@@ -21,11 +21,10 @@ class LoginScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           context.translate.login,
-          style: context.theme.textTheme.titleMedium?.copyWith(
-            color: MyColors.black,
-          ),
+          style: const TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: const Color.fromARGB(255, 18, 140, 126),
+        iconTheme: const IconThemeData(color: Colors.white), // WhatsApp green
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

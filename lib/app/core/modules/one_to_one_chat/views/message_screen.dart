@@ -25,24 +25,22 @@ class ChatRoomPage extends ConsumerStatefulWidget {
 class _MessagingBodyViewState extends ConsumerState<ChatRoomPage>
     with PickAnImageBottomSheet {
   final _sendMessageController = TextEditingController();
-  // final pickImageFromBottomSheet = PickAnImageBottomSheet();
+
   @override
   Widget build(BuildContext context) {
     final messagingRepo = ref.read(messagingProvider);
-    // final messageState = ref.watch(chatMessageProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.selectedUser.username),
-        backgroundColor: Colors.orangeAccent,
+        title: Text(
+          widget.selectedUser.username,
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color.fromARGB(255, 18, 140, 126),
+        iconTheme: IconThemeData(color: Colors.white), // WhatsApp green
       ),
       body: Column(
         children: [
-          // Visibility(
-          //     visible: messageState.isLoading,
-          //     child: Center(
-          //       child: CircularProgressIndicator(),
-          //     )),
           Expanded(
             child: StreamBuilder<List<Message>>(
               stream: messagingRepo.messagesStream(
@@ -53,8 +51,8 @@ class _MessagingBodyViewState extends ConsumerState<ChatRoomPage>
                 if (snapshot.hasError) {
                   debugPrint(snapshot.error.toString());
                   return Center(
-                      child:
-                          Text('Error fetching messages: ${snapshot.error}'));
+                    child: Text('Error fetching messages: ${snapshot.error}'),
+                  );
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -83,23 +81,26 @@ class _MessagingBodyViewState extends ConsumerState<ChatRoomPage>
       child: Row(
         children: [
           IconButton(
-              onPressed: () {
-                showOptions(context,
-                    senderId: FirebaseAuth.instance.currentUser!.uid,
-                    receiverId: userId);
-              },
-              icon: const Icon(Icons.add_a_photo)),
+            onPressed: () {
+              showOptions(context,
+                  senderId: FirebaseAuth.instance.currentUser!.uid,
+                  receiverId: userId);
+            },
+            icon: const Icon(Icons.add_a_photo),
+            color: const Color.fromARGB(255, 18, 140, 126), // WhatsApp green
+          ),
           Expanded(
             child: TextField(
               controller: _sendMessageController,
               maxLines: null,
               decoration: InputDecoration(
                 hintText: 'Type your message',
-                hintStyle: context.textTheme.bodySmall,
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+                hintStyle: context.textTheme.bodyText2,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 contentPadding:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 6),
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16),
               ),
             ),
           ),
@@ -124,6 +125,7 @@ class _MessagingBodyViewState extends ConsumerState<ChatRoomPage>
               }
             },
             icon: const Icon(Icons.send),
+            color: const Color.fromARGB(255, 18, 140, 126), // WhatsApp green
           ),
         ],
       ),
