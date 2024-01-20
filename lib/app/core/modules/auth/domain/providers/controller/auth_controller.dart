@@ -49,13 +49,13 @@ class AuthController extends StateNotifier<AuthState> {
       User? userCred = await _authRepository.signInWithEmailAndPassword(
           email: email.toString(), password: password.toString());
       if (userCred != null) {
-        // Save username name
-        await userCred.updateDisplayName(userName.toString());
+        // // Save username name
+        // await userCred.updateDisplayName(userName.toString());
 
-        // After that access "users" Firestore in firestore and save username, email and userLocation
-        await _authRepository.saveUserInfoToFirebase(
-            userCred.uid, userName.toString(), email.toString());
-        state = state.copyWith(isLoading: false, isAuth: true);
+        // // After that access "users" Firestore in firestore and save username, email and userLocation
+        // await _authRepository.saveUserInfoToFirebase(
+        //     userCred.uid, userName.toString(), email.toString());
+        // state = state.copyWith(isLoading: false, isAuth: true);
         return true;
       }
     } on AuthException catch (e) {
