@@ -103,6 +103,32 @@ class AuthRepo {
       throw AuthException(e.toString());
     }
   }
+
+  Future<void> updateUserInfoToFirebase(
+      Map<Object, Object?> updatedData) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(updatedData['userId'].toString())
+          .update(
+            updatedData,
+          );
+    } catch (e) {
+      throw AuthException(e.toString());
+    }
+  }
+  // Future<void> updateUserInfoToFirebase(String token) async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(FirebaseAuth.instance.currentUser!.uid)
+  //         .update({
+  //       'pushToken': token,
+  //     });
+  //   } catch (e) {
+  //     throw AuthException(e.toString());
+  //   }
+  // }
 }
 
 class AuthException implements Exception {

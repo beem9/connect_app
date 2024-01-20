@@ -3,15 +3,28 @@ import 'package:connect_app/app/core/modules/chats/domain/models/user_model.dart
 import 'package:connect_app/app/core/modules/chats/domain/providers/providers.dart';
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
 import 'package:connect_app/app/core/modules/auth/domain/providers/auth_providers.dart';
+import 'package:connect_app/app/core/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    notificationSetup.registerNotification();
+    notificationSetup.configLocalNotification();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final chatUsers = ref.watch(usersProvider);
     final authProvider = ref.read(authControllerProvider.notifier);
 
