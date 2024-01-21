@@ -1,5 +1,4 @@
 import 'package:connect_app/app/config/routes/my_named_routes.dart';
-import 'package:connect_app/app/config/theme/my_colors.dart';
 import 'package:connect_app/app/core/extensions/build_context_extension.dart';
 import 'package:connect_app/app/core/modules/auth/domain/providers/auth_providers.dart';
 import 'package:connect_app/app/core/modules/auth/widgets/my_login_forms_widget.dart';
