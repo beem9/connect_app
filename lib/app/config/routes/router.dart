@@ -1,6 +1,6 @@
 import 'package:connect_app/app/config/routes/my_named_routes.dart';
 import 'package:connect_app/app/core/modules/chats/domain/models/user_model.dart';
-import 'package:connect_app/app/core/modules/chats/navbar/view/location_screen.dart';
+import 'package:connect_app/app/core/modules/location/views/location_screen.dart';
 import 'package:connect_app/app/core/modules/chats/navbar/view/navbar_screen.dart';
 import 'package:connect_app/app/core/modules/chats/navbar/view/profile_screen.dart';
 import 'package:connect_app/app/core/modules/chats/navbar/view/homepage.dart';

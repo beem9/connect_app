@@ -63,7 +63,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 },
                 leading: const CircleAvatar(
                   radius: 25,
-                  backgroundImage: AssetImage('assets/user_placeholder.jpg'),
+                  // backgroundImage: AssetImage('assets/user_placeholder.jpg'),
                 ),
                 title: Text(
                   user.username,

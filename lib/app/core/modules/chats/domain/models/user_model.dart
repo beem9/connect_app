@@ -2,57 +2,53 @@
 import 'dart:convert';
 
 class UserModel {
-  final String email;
-  final String id;
-  final String? photo;
-  final String? userLocation;
   final String username;
+  final String email;
+  final String userID;
+  final double latitude;
+  final double longitude;
   UserModel({
-    required this.email,
-    required this.id,
-    this.photo,
-    this.userLocation,
     required this.username,
+    required this.email,
+    required this.userID,
+    required this.latitude,
+    required this.longitude,
   });
 
   UserModel copyWith({
-    String? email,
-    String? id,
-    String? photo,
-    String? userLocation,
     String? username,
+    String? email,
+    String? userID,
+    double? latitude,
+    double? longitude,
   }) {
     return UserModel(
-      email: email ?? this.email,
-      id: id ?? this.id,
-      photo: photo ?? this.photo,
-      userLocation: userLocation ?? this.userLocation,
       username: username ?? this.username,
+      email: email ?? this.email,
+      userID: userID ?? this.userID,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'email': email,
-      'id': id,
-      'photo': photo,
-      'userLocation': userLocation,
       'username': username,
+      'email': email,
+      'userID': userID,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
-    try {
-      return UserModel(
-        email: map['email'] as String,
-        id: map['id'] as String,
-        photo: map['photo'] ?? "",
-        userLocation: map['userLocation'] ?? "",
-        username: map['username'] as String,
-      );
-    } catch (e) {
-      throw e.toString();
-    }
+    return UserModel(
+      username: map['username'] as String,
+      email: map['email'] as String,
+      userID: map['userID'] as String,
+      latitude: map['latitude'] as double,
+      longitude: map['longitude'] as double,
+    );
   }
 
   String toJson() => json.encode(toMap());
@@ -62,26 +58,26 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(email: $email, id: $id, photo: $photo, userLocation: $userLocation, username: $username)';
+    return 'UserModel(username: $username, email: $email, userID: $userID, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
   bool operator ==(covariant UserModel other) {
     if (identical(this, other)) return true;
 
-    return other.email == email &&
-        other.id == id &&
-        other.photo == photo &&
-        other.userLocation == userLocation &&
-        other.username == username;
+    return other.username == username &&
+        other.email == email &&
+        other.userID == userID &&
+        other.latitude == latitude &&
+        other.longitude == longitude;
   }
 
   @override
   int get hashCode {
-    return email.hashCode ^
-        id.hashCode ^
-        photo.hashCode ^
-        userLocation.hashCode ^
-        username.hashCode;
+    return username.hashCode ^
+        email.hashCode ^
+        userID.hashCode ^
+        latitude.hashCode ^
+        longitude.hashCode;
   }
 }

@@ -45,7 +45,7 @@ class _MessagingBodyViewState extends ConsumerState<ChatRoomPage>
             child: StreamBuilder<List<Message>>(
               stream: messagingRepo.messagesStream(
                 senderId: FirebaseAuth.instance.currentUser!.uid,
-                receiverId: widget.selectedUser.id,
+                receiverId: widget.selectedUser.userID,
               ),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -68,7 +68,8 @@ class _MessagingBodyViewState extends ConsumerState<ChatRoomPage>
             ),
           ),
           const LoadingEffect(),
-          _buildMessageInput(context, widget.selectedUser.id, messagingRepo),
+          _buildMessageInput(
+              context, widget.selectedUser.userID, messagingRepo),
         ],
       ),
     );

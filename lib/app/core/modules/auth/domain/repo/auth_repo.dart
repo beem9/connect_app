@@ -87,7 +87,6 @@ class AuthRepo {
           "id": userId,
           'username': userName,
           'email': email,
-          'userLocation': null,
         },
       );
     } catch (e) {
